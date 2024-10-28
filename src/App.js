@@ -16,6 +16,7 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 
 function App() {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("token")
   );
@@ -36,7 +37,7 @@ function App() {
 
         try {
           const response = await axios.post(
-            "https://banana-game-server-65st-git-main-sandeeps-projects-16cf5d96.vercel.app/api/ranking/user",
+            `${apiUrl}/api/ranking/user`,
             { playerId: userId },
             {
               headers: {
@@ -54,7 +55,9 @@ function App() {
     };
 
     fetchUser();
-  }, []);
+  }, [isAuthenticated]);
+
+  console.log(user, "user");
   return (
     <Router>
       {isAuthenticated && (
