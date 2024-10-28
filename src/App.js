@@ -30,25 +30,27 @@ function App() {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
 
-      const decoded = jwtDecode(token);
+      if (token) {
+        const decoded = jwtDecode(token);
 
-      const userId = decoded._id;
+        const userId = decoded._id;
 
-      try {
-        const response = await axios.post(
-          "https://banana-game-server-65st-git-main-sandeeps-projects-16cf5d96.vercel.app/api/ranking/user",
-          { playerId: userId },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        try {
+          const response = await axios.post(
+            "https://banana-game-server-65st-git-main-sandeeps-projects-16cf5d96.vercel.app/api/ranking/user",
+            { playerId: userId },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
-        console.log(response.data, "user");
-        setUser(response.data);
-      } catch (error) {
-        console.error("Error fetching User", error);
+          console.log(response.data, "user");
+          setUser(response.data);
+        } catch (error) {
+          console.error("Error fetching User", error);
+        }
       }
     };
 
